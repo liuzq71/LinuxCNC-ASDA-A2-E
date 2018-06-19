@@ -43,3 +43,10 @@
 # Exec file asda_a2_e.hal
   
   $halrun -I asda_a2_e.hal
+  
+ # Run LinuxCNC GUI
+  
+  $linuxcnc swm-fm45a.ini
+  
+  Open file GCode gcode.ngc
+  
