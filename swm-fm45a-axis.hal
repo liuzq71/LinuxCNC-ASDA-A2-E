@@ -1,0 +1,62 @@
+###########################################################
+#
+# Axis Controller HAL file for SWM FM45A DRO Profi
+#
+# Created 2014/10/21 by Sascha Ittner
+#
+# Axis interface for Joints
+#
+# This File contains the Position-Controler for each 
+# joint plus the interface to the LCNC motion controller.
+# The motion controller delivers the position command
+# and receives the current position from position
+# feedback (motor encoder or external messurement system).
+# Position command and feedback even feeds into position
+# controller, which generates the velocity command for
+# the external motor drivers.
+#
+# The scale for poosition is mm, for velocity mm/s sould
+# be used (Please ensure that SCALE in the corresponding
+# [AXIS] section in the ini file is set correctly).
+#
+# If the external motor driver has has velocity controll
+# loop, FF1 sould be set accordingly (1.0 in case of
+# a velocity scale in mm/s)
+#
+# Parameters for the position controller are set in
+# the ini file. Please refer to
+# http://linuxcnc.org/docs/html/man/man9/pid.9.html
+# for the descrpition of the parameters
+#
+###########################################################
+
+###########################################################
+# X axis
+###########################################################
+
+# position controler
+setp x-pid.Pgain [AXIS_0]P
+setp x-pid.Igain [AXIS_0]I
+setp x-pid.Dgain [AXIS_0]D
+setp x-pid.FF0 [AXIS_0]FF0
+setp x-pid.FF1 [AXIS_0]FF1
+setp x-pid.FF2 [AXIS_0]FF2
+setp x-pid.deadband [AXIS_0]DEADBAND
+setp x-pid.maxoutput [AXIS_0]MAX_OUTPUT
+net x-enable => x-pid.enable
+net x-pos-cmd => x-pid.command
+net x-pos-fb => x-pid.feedback
+net x-vel-cmd <= x-pid.output
+
+# axis interface
+net x-neg-lim-in => axis.0.home-sw-in
+net x-enable <= axis.0.amp-enable-out
+net x-amp-fault => axis.0.amp-fault-in
+net x-pos-cmd <= axis.0.motor-pos-cmd
+net x-pos-fb => axis.0.motor-pos-fb
+net x-pos-joint <= axis.0.joint-pos-fb
+net x-homed <= axis.0.homed
+net x-homing <= axis.0.homing
+net x-neg-lim-in => axis.0.neg-lim-sw-in
+net x-pos-lim-in => axis.0.pos-lim-sw-in
+

@@ -1,0 +1,17 @@
+
+net voltage-on <= lcec.0.D3.din-0-not
+net voltage-on => lcec.0.D2.dout-0
+setp lcec.0.3A1.srv-enable-volt 1
+
+setp lcec.0.3A1.pos-scale [AXIS_0]SCALE
+setp lcec.0.3A1.extenc-scale [AXIS_0]ENC_SCALE
+
+net x-enable => lcec.0.3A1.srv-switch-on
+
+net x-enable => lcec.0.3A1.srv-enable
+
+net x-amp-fault <= lcec.0.3A1.srv-fault
+
+net x-vel-cmd => lcec.0.3A1.srv-vel-cmd
+
+net x-pos-fb <= lcec.0.3A1.enc-pos
